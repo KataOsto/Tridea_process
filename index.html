@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tridea</title>
+    <!-- Tailwind CSS CDN - upewnij się, że jest załadowany przed Twoim skryptem React -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aptos:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aptos+Serif:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      const logo = "./assets/logo/TRIDEA_ORIGINAL_150x30.svg";
+      const phoneIcon = "./assets/icons/phone.png";
+      const emailIcon = "./assets/icons/mail.png";
+      const backgroundImage = "./assets/image/background.jpg";
+
+      const ImageWithFallback = ({ src, alt, className }) => {
+        const [currentSrc, setCurrentSrc] = React.useState(src);
+        const [error, setError] = React.useState(false);
+
+        React.useEffect(() => {
+          setCurrentSrc(src);
+          setError(false);
+        }, [src]);
+
+        const handleError = () => {
+          if (!error) {
+            setCurrentSrc(
+              "https://placehold.co/100x40/FF0000/FFFFFF?text=Error"
+            );
+            setError(true);
+          }
+        };
+
+        return (
+          <img
+            src={currentSrc}
+            alt={alt}
+            className={className}
+            onError={handleError}
+          />
+        );
+      };
+
+      function App() {
+        return (
+          <div
+            className="min-h-screen text-black flex flex-col relative"
+            style={{
+              backgroundImage: `url(${backgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <div className="absolute inset-0 bg-white/80"></div>
+            <div className="relative z-10 min-h-screen flex flex-col">
+              {/* Header with logo */}
+              <header
+                className="w-full p-6 flex justify-start"
+                style={{ height: "80px" }}
+              >
+                <div>
+                  <ImageWithFallback
+                    src={logo}
+                    alt="Logo firmy"
+                    className="h-full"
+                  />
+                </div>
+              </header>
+
+              {/* Main content area */}
+              <main className="flex-1 flex flex-col items-center justify-center px-[30px] text-center max-w-2xl mx-auto">
+                <h1
+                  className="mb-8 text-4xl sm:text-5xl lg:text-6xl"
+                  style={{
+                    fontFamily: "'Aptos Serif', serif",
+                    fontWeight: "700",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Strona w budowie
+                </h1>
+
+                {/* Description paragraph */}
+                <p
+                  className="mb-12 leading-relaxed text-base sm:text-lg" // Responsive font sizes
+                  style={{
+                    fontFamily: "Aptos, sans-serif",
+                    fontWeight: "400",
+                  }}
+                >
+                  Obecnie intensywnie pracujemy nad ulepszeniem naszej strony
+                  internetowej. Dziękujemy za cierpliwość i zapraszamy już
+                  niedługo!
+                </p>
+
+                <div
+                  className="p-6 text-white rounded-lg shadow-lg"
+                  style={{ backgroundColor: "#9F1C22" }}
+                >
+                  <div className="flex flex-col sm:flex-row gap-6 items-center justify-center">
+                    {" "}
+                    {/* Centered items */}
+                    {/* Phone contact */}
+                    <a
+                      href="tel:+48459116548"
+                      className="hover:opacity-70 transition-opacity text-white flex items-center gap-2 text-lg" // Increased font size
+                    >
+                      <img
+                        src={phoneIcon}
+                        alt="Phone"
+                        className="w-6 h-6 brightness-0 invert"
+                      />
+                      +48 459 116 548
+                    </a>
+                    {/* Email contact - 'underline' class removed */}
+                    <a
+                      href="mailto:biuro@tridea.pl"
+                      className="hover:opacity-70 transition-opacity text-white flex items-center gap-2 text-lg" // 'underline' class removed
+                    >
+                      <img
+                        src={emailIcon}
+                        alt="Email"
+                        className="w-6 h-6 brightness-0 invert"
+                      />
+                      biuro@tridea.pl
+                    </a>
+                  </div>
+                </div>
+              </main>
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
